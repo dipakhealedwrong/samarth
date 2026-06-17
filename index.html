@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samarth Car Rentals – Self Drive Car Rental in Pune</title>
+  <meta name="description" content="Hassle-free self-drive car rentals in Pune. Book Hatchbacks, SUVs & Sedans at the best prices. Call or WhatsApp to book instantly.">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== CSS TOKENS ===== */
+    :root {
+      --navy:      #0A0F1E;
+      --navy-mid:  #111827;
+      --navy-card: #151C2E;
+      --gold:      #D4A843;
+      --gold-light:#F0C96A;
+      --gold-dark: #A87E2A;
+      --white:     #FFFFFF;
+      --silver:    #8B95A8;
+      --silver-lt: #C5CBD6;
+      --charcoal:  #1C2333;
+      --glass-bg:  rgba(255,255,255,0.05);
+      --glass-border: rgba(212,168,67,0.25);
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      --font-utility: 'Montserrat', sans-serif;
+      --shadow-gold: 0 0 40px rgba(212,168,67,0.18);
+      --shadow-card: 0 8px 40px rgba(0,0,0,0.45);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+
+    /* ===== PRELOADER ===== */
+    #preloader {
+      position: fixed; inset: 0; background: var(--navy); z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 20px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #preloader.hide { opacity: 0; visibility: hidden; }
+    .preloader-logo { font-family: var(--font-display); font-size: 2rem; color: var(--gold); }
+    .preloader-bar {
+      width: 200px; height: 3px; background: rgba(212,168,67,0.2); border-radius: 2px; overflow: hidden;
+    }
+    .preloader-fill {
+      height: 100%; background: var(--gold); border-radius: 2px;
+      animation: fillBar 1.8s ease forwards;
+    }
+    @keyframes fillBar { from { width: 0; } to { width: 100%; } }
+
+    /* ===== NAVBAR ===== */
+    .navbar-custom {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 16px 0;
+      transition: var(--transition);
+    }
+    .navbar-custom.scrolled {
+      background: rgba(10,15,30,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 10px 0;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+    }
+    .navbar-brand-text {
+      font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--white) !important;
+      letter-spacing: -0.3px;
+    }
+    .navbar-brand-text span { color: var(--gold); }
+    .nav-link-custom {
+      font-family: var(--font-utility);
+      font-size: 0.78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      color: var(--silver-lt) !important;
+      padding: 6px 14px !important;
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-link-custom::after {
+      content: ''; position: absolute; bottom: 0; left: 14px; right: 14px;
+      height: 2px; background: var(--gold); transform: scaleX(0);
+      transition: transform var(--transition); border-radius: 2px;
+    }
+    .nav-link-custom:hover { color: var(--gold) !important; }
+    .nav-link-custom:hover::after { transform: scaleX(1); }
+    .btn-nav-book {
+      font-family: var(--font-utility); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 9px 22px; border-radius: 50px;
+      transition: var(--transition);
+    }
+    .btn-nav-book:hover {
+      background: var(--gold-light); transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(212,168,67,0.4);
+    }
+    .navbar-toggler-custom {
+      border: 1.5px solid var(--glass-border);
+      background: var(--glass-bg); border-radius: 8px; padding: 6px 10px;
+    }
+    .navbar-toggler-custom .bi { color: var(--gold); font-size: 1.2rem; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100svh;
+      background: 
+        linear-gradient(135deg, rgba(10,15,30,0.92) 0%, rgba(10,15,30,0.6) 50%, rgba(10,15,30,0.88) 100%),
+        url('https://samarthcarrentals.in/wp-content/uploads/2024/12/home-abiut-banner-1024x684.jpg') center/cover no-repeat;
+      display: flex; align-items: center; position: relative; overflow: hidden;
+      padding-top: 90px;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(212,168,67,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-utility); font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 3px; color: var(--gold);
+      display: inline-flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 30px; height: 1px; background: var(--gold); opacity: 0.6;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 900; line-height: 1.08;
+      letter-spacing: -1.5px; margin-bottom: 22px;
+    }
+    .hero-title .accent { color: var(--gold); }
+    .hero-subtitle {
+      font-size: 1.05rem; color: var(--silver-lt);
+      max-width: 520px; line-height: 1.7; margin-bottom: 36px;
+    }
+    .hero-cta-group { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary-gold {
+      font-family: var(--font-utility); font-weight: 700; font-size: 0.85rem;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 14px 32px; border-radius: 50px;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: var(--transition); text-decoration: none;
+    }
+    .btn-primary-gold:hover {
+      background: var(--gold-light); color: var(--navy);
+      transform: translateY(-2px); box-shadow: 0 12px 30px rgba(212,168,67,0.4);
+    }
+    .btn-outline-gold {
+      font-family: var(--font-utility); font-weight: 700; font-size: 0.85rem;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      background: transparent; color: var(--gold);
+      border: 1.5px solid rgba(212,168,67,0.5);
+      padding: 14px 32px; border-radius: 50px;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: var(--transition); text-decoration: none;
+    }
+    .btn-outline-gold:hover {
+      background: rgba(212,168,67,0.1); color: var(--gold);
+      border-color: var(--gold); transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px;
+      padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-stat-num {
+      font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat-label { font-size: 0.75rem; color: var(--silver); font-weight: 500; margin-top: 4px; }
+    .hero-scroll-indicator {
+      position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--silver); font-size: 0.7rem; font-family: var(--font-utility);
+      text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+    .hero-car-img {
+      position: absolute; right: -2%; bottom: 0;
+      width: min(55%, 620px);
+      filter: drop-shadow(0 20px 60px rgba(0,0,0,0.6));
+      animation: floatCar 5s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes floatCar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ===== MARQUEE STRIP ===== */
+    .marquee-strip {
+      background: var(--gold); padding: 12px 0; overflow: hidden;
+    }
+    .marquee-track {
+      display: flex; gap: 0; width: max-content;
+      animation: marqueeScroll 22s linear infinite;
+    }
+    .marquee-item {
+      font-family: var(--font-utility); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px; color: var(--navy);
+      padding: 0 36px; display: flex; align-items: center; gap: 14px;
+      white-space: nowrap;
+    }
+    .marquee-dot { width: 5px; height: 5px; background: var(--navy); border-radius: 50%; opacity: 0.5; }
+    @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ===== SECTION HEADERS ===== */
+    .section-eyebrow {
+      font-family: var(--font-utility); font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 3px; color: var(--gold);
+      display: block; margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.15; letter-spacing: -0.5px;
+    }
+    .section-title span { color: var(--gold); }
+    .title-underline {
+      width: 48px; height: 3px; background: var(--gold); border-radius: 2px; margin-top: 16px;
+    }
+    .section-subtitle {
+      color: var(--silver); font-size: 1rem; line-height: 1.75; max-width: 560px;
+    }
+
+    /* ===== FLEET FILTER TABS ===== */
+    .fleet-section { padding: 90px 0; }
+    .fleet-tabs {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 50px;
+    }
+    .fleet-tab-btn {
+      font-family: var(--font-utility); font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      background: var(--glass-bg); border: 1.5px solid rgba(255,255,255,0.1);
+      color: var(--silver-lt); padding: 10px 24px; border-radius: 50px;
+      cursor: pointer; transition: var(--transition);
+    }
+    .fleet-tab-btn:hover, .fleet-tab-btn.active {
+      background: var(--gold); color: var(--navy);
+      border-color: var(--gold); box-shadow: 0 6px 20px rgba(212,168,67,0.3);
+    }
+
+    /* ===== CAR CARDS ===== */
+    .car-card {
+      background: var(--navy-card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      overflow: hidden; position: relative;
+      transition: var(--transition);
+      height: 100%;
+    }
+    .car-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--glass-border);
+      box-shadow: var(--shadow-gold), var(--shadow-card);
+    }
+    .car-card-img-wrap {
+      position: relative; overflow: hidden;
+      background: linear-gradient(135deg, #111827, #1C2333);
+      padding: 30px 20px 20px;
+      min-height: 200px; display: flex; align-items: center; justify-content: center;
+    }
+    .car-card-img-wrap img {
+      max-width: 100%; max-height: 160px;
+      object-fit: contain;
+      transition: transform 0.5s ease;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+    }
+    .car-card:hover .car-card-img-wrap img { transform: scale(1.06) translateY(-4px); }
+    .car-type-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-family: var(--font-utility); font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      background: rgba(212,168,67,0.15); color: var(--gold);
+      border: 1px solid rgba(212,168,67,0.3); border-radius: 50px;
+      padding: 4px 12px;
+    }
+    .car-card-body { padding: 22px 22px 20px; }
+    .car-name {
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+      color: var(--white); margin-bottom: 4px;
+    }
+    .car-price-row {
+      display: flex; align-items: baseline; gap: 6px; margin-bottom: 18px;
+    }
+    .car-price-from { font-size: 0.72rem; color: var(--silver); font-family: var(--font-utility); }
+    .car-price {
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: var(--gold);
+      line-height: 1;
+    }
+    .car-price-unit { font-size: 0.72rem; color: var(--silver); }
+    .car-specs {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+    }
+    .car-spec-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; color: var(--silver);
+      background: rgba(255,255,255,0.04); border-radius: 8px; padding: 8px 10px;
+    }
+    .car-spec-item .bi { color: var(--gold); font-size: 0.85rem; }
+    .car-spec-item span { font-weight: 500; }
+    .car-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-call-card {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      font-family: var(--font-utility); font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      background: var(--gold); color: var(--navy); border: none;
+      padding: 11px 8px; border-radius: 10px; text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-call-card:hover { background: var(--gold-light); color: var(--navy); transform: translateY(-1px); }
+    .btn-whatsapp-card {
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      font-family: var(--font-utility); font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      background: rgba(37,211,102,0.12); color: #25D366;
+      border: 1.5px solid rgba(37,211,102,0.3);
+      padding: 11px 8px; border-radius: 10px; text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-whatsapp-card:hover {
+      background: rgba(37,211,102,0.2); color: #25D366;
+      border-color: #25D366; transform: translateY(-1px);
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-section {
+      padding: 90px 0; background: var(--navy-mid);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .step-card {
+      text-align: center; padding: 36px 24px;
+      background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg);
+      position: relative; transition: var(--transition);
+    }
+    .step-card:hover {
+      background: rgba(212,168,67,0.06);
+      border-color: var(--glass-border);
+      transform: translateY(-4px);
+    }
+    .step-num {
+      font-family: var(--font-display); font-size: 3.5rem; font-weight: 900;
+      color: rgba(212,168,67,0.12); line-height: 1;
+      position: absolute; top: 16px; right: 20px;
+    }
+    .step-icon {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(135deg, rgba(212,168,67,0.2), rgba(212,168,67,0.05));
+      border: 1px solid rgba(212,168,67,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; color: var(--gold); margin: 0 auto 20px;
+    }
+    .step-title {
+      font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;
+    }
+    .step-desc { font-size: 0.88rem; color: var(--silver); line-height: 1.7; }
+    .step-connector {
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(212,168,67,0.3); font-size: 1.2rem;
+    }
+
+    /* ===== FEATURES GRID ===== */
+    .features-section { padding: 90px 0; }
+    .feature-card {
+      padding: 30px 26px;
+      background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); height: 100%;
+      transition: var(--transition); position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .feature-card:hover { border-color: var(--glass-border); transform: translateY(-3px); }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(212,168,67,0.18), rgba(212,168,67,0.04));
+      border: 1px solid rgba(212,168,67,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; color: var(--gold); margin-bottom: 18px;
+    }
+    .feature-title {
+      font-family: var(--font-utility); font-weight: 700; font-size: 0.9rem;
+      text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px;
+    }
+    .feature-desc { font-size: 0.86rem; color: var(--silver); line-height: 1.7; }
+
+    /* ===== ABOUT BANNER ===== */
+    .about-section { padding: 90px 0; }
+    .about-img-wrap {
+      position: relative; border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .about-img-wrap img { width: 100%; object-fit: cover; border-radius: var(--radius-lg); }
+    .about-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(10,15,30,0.5), transparent);
+      border-radius: var(--radius-lg);
+    }
+    .about-badge {
+      position: absolute; bottom: 20px; left: 20px; z-index: 2;
+      background: var(--gold); color: var(--navy); border-radius: var(--radius-md);
+      padding: 14px 20px;
+    }
+    .about-badge .num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; line-height: 1; }
+    .about-badge .label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .about-text p { color: var(--silver); line-height: 1.8; margin-bottom: 14px; font-size: 0.96rem; }
+    .about-checklist { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .about-checklist li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: var(--silver-lt);
+    }
+    .about-checklist li .bi { color: var(--gold); font-size: 0.9rem; }
+
+    /* ===== FAQ ===== */
+    .faq-section { padding: 90px 0; background: var(--navy-mid); }
+    .accordion-item-custom {
+      background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md) !important; margin-bottom: 10px; overflow: hidden;
+    }
+    .accordion-button-custom {
+      background: transparent; color: var(--white);
+      font-family: var(--font-utility); font-weight: 600; font-size: 0.9rem;
+      padding: 18px 22px; border: none; width: 100%;
+      text-align: left; display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; transition: color var(--transition);
+    }
+    .accordion-button-custom:hover { color: var(--gold); }
+    .accordion-button-custom .acc-icon {
+      font-size: 1rem; color: var(--gold); transition: transform var(--transition);
+      flex-shrink: 0; margin-left: 12px;
+    }
+    .accordion-button-custom.open .acc-icon { transform: rotate(45deg); }
+    .accordion-content {
+      display: none; padding: 0 22px 18px;
+      font-size: 0.875rem; color: var(--silver); line-height: 1.75;
+    }
+    .accordion-content.show { display: block; }
+
+    /* ===== CONTACT / FOOTER ===== */
+    .contact-section { padding: 90px 0; }
+    .contact-card {
+      background: var(--navy-card); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-lg); padding: 40px;
+    }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: rgba(212,168,67,0.12); border: 1px solid rgba(212,168,67,0.25);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-label { font-family: var(--font-utility); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--silver); margin-bottom: 4px; }
+    .contact-value { font-size: 0.95rem; color: var(--white); font-weight: 500; text-decoration: none; }
+    .contact-value:hover { color: var(--gold); }
+    .social-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .social-btn {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--glass-bg); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--silver-lt); text-decoration: none; font-size: 1rem;
+      transition: var(--transition);
+    }
+    .social-btn:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+    .footer-bottom {
+      background: var(--navy); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 22px 0; text-align: center;
+      font-size: 0.8rem; color: var(--silver);
+      font-family: var(--font-utility);
+    }
+    .footer-bottom span { color: var(--gold); }
+
+    /* ===== MAP ===== */
+    .map-wrap {
+      border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      height: 340px;
+    }
+    .map-wrap iframe { width: 100%; height: 100%; filter: invert(0.9) hue-rotate(180deg) brightness(0.85); }
+
+    /* ===== FLOATING WHATSAPP ===== */
+    .floating-wa {
+      position: fixed; bottom: 80px; right: 20px; z-index: 999;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; text-decoration: none;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      animation: pulse-wa 2.5s infinite;
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 6px 20px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 6px 30px rgba(37,211,102,0.8), 0 0 0 8px rgba(37,211,102,0.1); }
+    }
+
+    /* ===== STICKY MOBILE CTA BAR ===== */
+    .mobile-cta-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 998;
+      display: flex; gap: 0;
+      background: var(--navy-card); border-top: 1px solid var(--glass-border);
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.5);
+    }
+    .mobile-cta-bar a {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 4px; padding: 10px 6px 14px;
+      font-family: var(--font-utility); font-size: 0.62rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      text-decoration: none; transition: var(--transition);
+    }
+    .mobile-cta-bar .cta-call { background: var(--gold); color: var(--navy); }
+    .mobile-cta-bar .cta-call:hover { background: var(--gold-light); }
+    .mobile-cta-bar .cta-wa { background: rgba(37,211,102,0.15); color: #25D366; border-left: 1px solid rgba(37,211,102,0.2); }
+    .mobile-cta-bar .cta-wa:hover { background: rgba(37,211,102,0.25); }
+    .mobile-cta-bar .bi { font-size: 1.25rem; }
+
+    /* ===== ANIMATIONS ===== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ===== GRID ITEMS HIDDEN ===== */
+    .car-grid-item { display: none; }
+    .car-grid-item.active { display: flex; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 991px) {
+      .hero-car-img { display: none; }
+      .hero { text-align: center; padding-top: 100px; }
+      .hero-cta-group { justify-content: center; }
+      .hero-stats { justify-content: center; gap: 28px; }
+      .hero-subtitle { margin: 0 auto 36px; }
+      .step-connector { display: none; }
+      .about-checklist { grid-template-columns: 1fr; }
+      .floating-wa { bottom: 80px; }
+    }
+    @media (max-width: 575px) {
+      .hero-title { font-size: 2.1rem; }
+      .hero-stats { gap: 20px; }
+      .hero-stat-num { font-size: 1.6rem; }
+      .contact-card { padding: 24px 18px; }
+      .fleet-tab-btn { font-size: 0.7rem; padding: 8px 16px; }
+    }
+    @media (min-width: 992px) {
+      .mobile-cta-bar { display: none; }
+      .floating-wa { bottom: 30px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="preloader-logo">Samarth</div>
+  <div class="preloader-bar"><div class="preloader-fill"></div></div>
+</div>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.link/tnddzh" class="floating-wa" target="_blank" aria-label="WhatsApp">
+  <i class="bi bi-whatsapp"></i>
+</a>
+
+<!-- MOBILE STICKY CTA BAR -->
+<div class="mobile-cta-bar d-lg-none">
+  <a href="tel:+917066536551" class="cta-call">
+    <i class="bi bi-telephone-fill"></i> Call Now
+  </a>
+  <a href="https://wa.link/tnddzh" target="_blank" class="cta-wa">
+    <i class="bi bi-whatsapp"></i> WhatsApp
+  </a>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar-custom" id="mainNav">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <!-- Brand -->
+      <a href="#" class="navbar-brand-text text-decoration-none">
+        Samarth <span>Car Rentals</span>
+      </a>
+      <!-- Desktop Nav -->
+      <div class="d-none d-lg-flex align-items-center gap-1">
+        <a href="#fleet" class="nav-link-custom">Fleet</a>
+        <a href="#how" class="nav-link-custom">How It Works</a>
+        <a href="#about" class="nav-link-custom">About</a>
+        <a href="#faq" class="nav-link-custom">FAQ</a>
+        <a href="#contact" class="nav-link-custom">Contact</a>
+      </div>
+      <!-- CTA + Toggler -->
+      <div class="d-flex align-items-center gap-3">
+        <a href="tel:+917066536551" class="btn-nav-book d-none d-lg-flex align-items-center gap-2">
+          <i class="bi bi-telephone-fill"></i> Book Now
+        </a>
+        <button class="navbar-toggler-custom d-lg-none" id="navToggler" aria-label="Toggle navigation">
+          <i class="bi bi-list" id="navIcon"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Nav -->
+    <div id="mobileNav" style="display:none; padding-top: 20px; padding-bottom: 10px;">
+      <a href="#fleet" class="nav-link-custom d-block py-2">Fleet</a>
+      <a href="#how" class="nav-link-custom d-block py-2">How It Works</a>
+      <a href="#about" class="nav-link-custom d-block py-2">About</a>
+      <a href="#faq" class="nav-link-custom d-block py-2">FAQ</a>
+      <a href="#contact" class="nav-link-custom d-block py-2">Contact</a>
+      <div class="d-flex gap-3 mt-3">
+        <a href="tel:+917066536551" class="btn-primary-gold" style="padding:12px 20px;font-size:0.8rem;">
+          <i class="bi bi-telephone-fill"></i> Call
+        </a>
+        <a href="https://wa.link/tnddzh" class="btn-outline-gold" style="padding:12px 20px;font-size:0.8rem; color:#25D366; border-color:rgba(37,211,102,0.4);" target="_blank">
+          <i class="bi bi-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="container position-relative" style="z-index:2;">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="hero-eyebrow">Pune's Premium Self-Drive</div>
+        <h1 class="hero-title">
+          Drive Your <span class="accent">Own Story</span><br>On Pune's Roads
+        </h1>
+        <p class="hero-subtitle">
+          Samarth Car Rentals offers Pune's finest self-drive fleet — from city hatchbacks to powerful SUVs. Freedom, flexibility, and affordability in one seamless booking.
+        </p>
+        <div class="hero-cta-group">
+          <a href="tel:+917066536551" class="btn-primary-gold">
+            <i class="bi bi-telephone-fill"></i> Call to Book
+          </a>
+          <a href="https://wa.link/tnddzh" target="_blank" class="btn-outline-gold" style="color:#25D366; border-color:rgba(37,211,102,0.4);">
+            <i class="bi bi-whatsapp"></i> WhatsApp Us
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">50+</div>
+            <div class="hero-stat-label">Cars in Fleet</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">3+</div>
+            <div class="hero-stat-label">Years Trusted</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">24/7</div>
+            <div class="hero-stat-label">Support</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">5★</div>
+            <div class="hero-stat-label">Rated Service</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Hero floating car -->
+  <img src="https://samarthcarrentals.in/wp-content/uploads/2024/08/RoyalBlue-0-3.avif" alt="Car" class="hero-car-img d-none d-lg-block" />
+  <!-- Scroll indicator -->
+  <div class="hero-scroll-indicator" onclick="document.getElementById('fleet').scrollIntoView({behavior:'smooth'})">
+    <i class="bi bi-chevron-double-down"></i>
+    <span>Explore Fleet</span>
+  </div>
+</section>
+
+<!-- ===== MARQUEE STRIP ===== -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item"><span class="marquee-dot"></span> Self-Drive Cars Pune</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Airport Pickup & Drop</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Hatchback • SUV • Sedan</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Outstation Rentals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Flexible Monthly Plans</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> No Hidden Charges</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Founded June 2021</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> 24/7 Customer Support</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Self-Drive Cars Pune</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Airport Pickup & Drop</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Hatchback • SUV • Sedan</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Outstation Rentals</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Flexible Monthly Plans</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> No Hidden Charges</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> Founded June 2021</span>
+    <span class="marquee-item"><span class="marquee-dot"></span> 24/7 Customer Support</span>
+  </div>
+</div>
+
+<!-- ===== FLEET SECTION ===== -->
+<section class="fleet-section" id="fleet">
+  <div class="container">
+    <div class="text-center mb-2 reveal">
+      <span class="section-eyebrow">Our Fleet</span>
+      <h2 class="section-title">Choose Your <span>Perfect Ride</span></h2>
+      <div class="title-underline mx-auto mt-3"></div>
+      <p class="section-subtitle mx-auto mt-4">Well-maintained, sanitized vehicles ready for city drives, outstation trips, and everything in between.</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="fleet-tabs reveal" style="margin-top:40px;">
+      <button class="fleet-tab-btn active" data-filter="all">All Cars</button>
+      <button class="fleet-tab-btn" data-filter="hatchback">Hatchback</button>
+      <button class="fleet-tab-btn" data-filter="suv">SUV / MPV</button>
+      <button class="fleet-tab-btn" data-filter="sedan">Sedan</button>
+    </div>
+
+    <!-- Car Grid -->
+    <div class="row g-4" id="carGrid">
+
+      <!-- BALENO -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="hatchback">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Hatchback</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/Baleno-Automatic.png" alt="Baleno">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Baleno</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,300</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>37 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/tnddzh" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SWIFT -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="hatchback">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Hatchback</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/Maruti-Suzuki-Swift.jpg" alt="Swift">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Swift</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,100</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>37 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/rfb00j" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- i20 -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="hatchback">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Hatchback</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/Hyundai-i20.jpg" alt="Hyundai i20">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Hyundai i20</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,500</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Diesel</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>37 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/xr3gfw" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IGNIS -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="hatchback">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Hatchback</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/ignis.jpg" alt="Suzuki Ignis">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Suzuki Ignis</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹1,900</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>32 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/m3b4y0" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TATA NEXON -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">SUV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/08/RoyalBlue-0-3.avif" alt="Tata Nexon">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Tata Nexon</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,800</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Diesel</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>44 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/vt91xu" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUZUKI BREZZA -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">SUV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/Maruti-Brezza.jpg" alt="Suzuki Brezza">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Suzuki Brezza</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,700</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>48 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/sup506" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TATA PUNCH -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">SUV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2025/02/TornadoBlue-0-1.avif" alt="Tata Punch">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Tata Punch</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,300</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol+CNG</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>32 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/jmegv7" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TATA ALTROZ -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="hatchback">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Hatchback</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2025/02/altroz.avif" alt="Tata Altroz">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Tata Altroz</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,600</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Diesel</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>37 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/bvto5w" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KIA CARENS PETROL -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">MPV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2025/02/Kia-Carens-BS-1-1024x576.jpg" alt="Kia Carens">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Kia Carens</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹3,500</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>7 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>45 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/n8gc27" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KIA CARENS DIESEL -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">MPV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2025/02/kia-Crense-1.png" alt="Kia Carens Diesel">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Kia Carens Diesel</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹4,000</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>7 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Diesel</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>45 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/2xukqq" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ERTIGA -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">MPV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/05/Ertiga.png" alt="Suzuki Ertiga">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Suzuki Ertiga</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹3,300</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>7 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol+CNG</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>45 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/7botfj" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RENAULT TRIBER -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">MPV • Auto</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/08/d85192dfdf-1024x576.webp" alt="Renault Triber">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Renault Triber Auto</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,800</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Automatic</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>7 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol+CNG</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>45 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/y1ebsd" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- XL6 -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="suv">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">MPV</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/08/XL6-MPV-thumbnail564x360.webp" alt="Suzuki XL6">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Suzuki XL6</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹3,300</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>6 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol+CNG</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>32 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/q4vykh" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUZUKI CIAZ -->
+      <div class="col-sm-6 col-lg-4 car-grid-item active" data-category="sedan">
+        <div class="car-card">
+          <div class="car-card-img-wrap">
+            <span class="car-type-badge">Sedan</span>
+            <img src="https://samarthcarrentals.in/wp-content/uploads/2024/12/Maruti-Suzuki-Ciaz.jpg" alt="Suzuki Ciaz">
+          </div>
+          <div class="car-card-body">
+            <div class="car-name">Suzuki Ciaz</div>
+            <div class="car-price-row">
+              <span class="car-price-from">Starting from</span>
+              <span class="car-price">₹2,600</span>
+              <span class="car-price-unit">/day</span>
+            </div>
+            <div class="car-specs">
+              <div class="car-spec-item"><i class="bi bi-gear-fill"></i><span>Manual</span></div>
+              <div class="car-spec-item"><i class="bi bi-people-fill"></i><span>5 Seats</span></div>
+              <div class="car-spec-item"><i class="bi bi-fuel-pump-fill"></i><span>Petrol</span></div>
+              <div class="car-spec-item"><i class="bi bi-droplet-fill"></i><span>43 Litres</span></div>
+            </div>
+            <div class="car-cta-row">
+              <a href="tel:+917066536551" class="btn-call-card"><i class="bi bi-telephone-fill"></i> Call</a>
+              <a href="https://wa.link/btmuiw" target="_blank" class="btn-whatsapp-card"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /carGrid -->
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="how-section" id="how">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="section-eyebrow">Simple Process</span>
+      <h2 class="section-title">Book in <span>4 Easy Steps</span></h2>
+      <div class="title-underline mx-auto mt-3"></div>
+    </div>
+    <div class="row g-4 align-items-stretch">
+      <div class="col-6 col-lg-3 reveal">
+        <div class="step-card h-100">
+          <span class="step-num">01</span>
+          <div class="step-icon"><i class="bi bi-car-front-fill"></i></div>
+          <div class="step-title">Choose Your Car</div>
+          <p class="step-desc">Browse our fleet of hatchbacks, SUVs, and sedans. Pick one that fits your trip and budget.</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal">
+        <div class="step-card h-100">
+          <span class="step-num">02</span>
+          <div class="step-icon"><i class="bi bi-chat-dots-fill"></i></div>
+          <div class="step-title">Contact Us</div>
+          <p class="step-desc">Call or WhatsApp us directly. Get instant confirmation and all booking details.</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal">
+        <div class="step-card h-100">
+          <span class="step-num">03</span>
+          <div class="step-icon"><i class="bi bi-wallet2"></i></div>
+          <div class="step-title">Pay Advance</div>
+          <p class="step-desc">A small advance secures your booking. Transparent pricing, zero hidden charges.</p>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 reveal">
+        <div class="step-card h-100">
+          <span class="step-num">04</span>
+          <div class="step-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <div class="step-title">Get It Delivered</div>
+          <p class="step-desc">We deliver the car to your doorstep anywhere in Pune. Start driving instantly.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5 reveal">
+      <a href="tel:+917066536551" class="btn-primary-gold" style="font-size:0.95rem; padding:16px 40px;">
+        <i class="bi bi-telephone-fill"></i> Book Your Ride Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="features-section" id="features">
+  <div class="container">
+    <div class="row mb-5 reveal">
+      <div class="col-lg-6">
+        <span class="section-eyebrow">Why Choose Us</span>
+        <h2 class="section-title">Pune's Most <span>Trusted</span> Car Rental</h2>
+        <div class="title-underline mt-3"></div>
+      </div>
+      <div class="col-lg-6 d-flex align-items-end">
+        <p class="section-subtitle mb-0">From airport pickups to weekend getaways, we are dedicated to making every journey smooth, safe, and affordable.</p>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-shield-check-fill"></i></div>
+          <div class="feature-title">Sanitized & Maintained</div>
+          <p class="feature-desc">Every vehicle undergoes thorough sanitization and regular maintenance checks before each rental.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-airplane-fill"></i></div>
+          <div class="feature-title">Airport Pickup & Drop</div>
+          <p class="feature-desc">Serving both Pune airports. We're ready when your flight lands, day or night.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-clock-fill"></i></div>
+          <div class="feature-title">24/7 Support</div>
+          <p class="feature-desc">Our team is available round the clock to assist you during your entire rental period.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-geo-fill"></i></div>
+          <div class="feature-title">All Pune Locations</div>
+          <p class="feature-desc">Pick-up and drop-off available throughout Pune — home, office, or any location you choose.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-calendar-check-fill"></i></div>
+          <div class="feature-title">Flexible Durations</div>
+          <p class="feature-desc">Daily, weekly, or monthly rentals. We adapt to your schedule, not the other way around.</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4 reveal">
+        <div class="feature-card h-100">
+          <div class="feature-icon"><i class="bi bi-tag-fill"></i></div>
+          <div class="feature-title">No Hidden Charges</div>
+          <p class="feature-desc">What you see is what you pay. Transparent pricing and clear terms, always.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-5 reveal">
+        <div class="about-img-wrap">
+          <img src="https://samarthcarrentals.in/wp-content/uploads/2024/12/banner-1024x683.jpg" alt="About Samarth Car Rentals">
+          <div class="about-badge">
+            <div class="num">3+</div>
+            <div class="label">Years of Trust</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 reveal">
+        <span class="section-eyebrow">Our Story</span>
+        <h2 class="section-title">Best Car Rental <span>Company in Pune</span></h2>
+        <div class="title-underline mt-3 mb-4"></div>
+        <div class="about-text">
+          <p>Founded in June 2021 by Mr. Hrishikesh Deore and Mr. Pranav Maheshwari, Samarth Car Rentals was born from a simple belief: everyone deserves the freedom to drive without compromise.</p>
+          <p>We offer the widest range of self-drive vehicles in Pune — from economical hatchbacks to spacious 7-seater MPVs — all at honest prices with zero hidden fees. Whether it's a quick city errand, an outstation adventure, or a long-term rental, we have you covered.</p>
+        </div>
+        <ul class="about-checklist mt-4 mb-5">
+          <li><i class="bi bi-check-circle-fill"></i> Wide vehicle range</li>
+          <li><i class="bi bi-check-circle-fill"></i> Doorstep delivery</li>
+          <li><i class="bi bi-check-circle-fill"></i> Outstation trips</li>
+          <li><i class="bi bi-check-circle-fill"></i> Airport transfers</li>
+          <li><i class="bi bi-check-circle-fill"></i> Monthly rentals</li>
+          <li><i class="bi bi-check-circle-fill"></i> Trusted since 2021</li>
+        </ul>
+        <a href="tel:+917066536551" class="btn-primary-gold">
+          <i class="bi bi-telephone-fill"></i> Call Us Now
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq-section" id="faq">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="section-eyebrow">Got Questions?</span>
+      <h2 class="section-title">Frequently <span>Asked Questions</span></h2>
+      <div class="title-underline mx-auto mt-3"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 reveal">
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            What types of cars can I hire?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">We offer hatchbacks (Baleno, Swift, i20, Ignis, Altroz), SUVs & MPVs (Nexon, Brezza, Punch, Carens, Ertiga, Triber, XL6), and sedans (Ciaz). All well-maintained and sanitized.</div>
+        </div>
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            How do I book a self-drive car?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">Simply call us at +91 7066536551 or WhatsApp us. Select your car, confirm your dates, pay a small advance, and we'll deliver the car to your location in Pune.</div>
+        </div>
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            Do you provide outstation rentals?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">Yes! We provide outstation car rentals from Pune for leisure trips, business travel, and weekend getaways. Contact us to discuss your destination and we'll arrange accordingly.</div>
+        </div>
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            Is airport pickup and drop available?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">Absolutely. We offer car rentals at both Pune airports — whether you need a self-drive car or a driver, we'll have a vehicle ready when you arrive.</div>
+        </div>
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            Are there special rates for long-term rentals?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">Yes, we offer attractive discounts for weekly and monthly rentals. Contact our team directly to discuss a customized package that suits your requirements.</div>
+        </div>
+
+        <div class="accordion-item-custom">
+          <button class="accordion-button-custom" onclick="toggleAcc(this)">
+            What are the charges? Are there hidden fees?
+            <i class="bi bi-plus acc-icon"></i>
+          </button>
+          <div class="accordion-content">Our pricing is fully transparent with no hidden charges. The rate you see is the rate you pay. All terms and conditions are communicated clearly before booking.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <span class="section-eyebrow">Get in Touch</span>
+      <h2 class="section-title">Ready to <span>Hit the Road?</span></h2>
+      <div class="title-underline mx-auto mt-3"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-5 reveal">
+        <div class="contact-card h-100">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <div class="contact-label">Primary Number</div>
+              <a href="tel:+917066536551" class="contact-value">+91 70665 36551</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <div class="contact-label">Alternate Number</div>
+              <a href="tel:+919850530029" class="contact-value">+91 98505 30029</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-whatsapp"></i></div>
+            <div>
+              <div class="contact-label">WhatsApp</div>
+              <a href="https://wa.link/tnddzh" target="_blank" class="contact-value">Message Us on WhatsApp</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <div class="contact-label">Email</div>
+              <a href="mailto:shreesamarthcarrental5@gmail.com" class="contact-value">shreesamarthcarrental5@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <div class="contact-label">Address</div>
+              <span class="contact-value" style="font-size:0.85rem;">3/1, nr. Shitaladevi Mandir, behind Shree Shiv Chhatrapati Sports Complex, Mahalunge, Pune 411045</span>
+            </div>
+          </div>
+          <!-- Social -->
+          <div style="padding-top:18px;">
+            <div class="contact-label mb-3">Follow Us</div>
+            <div class="social-row">
+              <a href="https://www.facebook.com/samarthcarrentals/" target="_blank" class="social-btn" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/samarth_car_rentals" target="_blank" class="social-btn" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="https://x.com/samarthcarrent" target="_blank" class="social-btn" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://www.youtube.com/@SamarthCarRentals-e8m" target="_blank" class="social-btn" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 reveal">
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q=Samarth+self+drive+car+parking,+3/1,+nr.+Shitaladevi+Mandir,+behind+SHREE+SHIV+CHHATRAPATI+SPORTS+COMPLEX,+Mahalunge,+Pune,+Maharashtra+411045&t=m&z=15&output=embed&iwloc=near"
+            loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
+            title="Samarth Car Rentals Location"></iframe>
+        </div>
+        <!-- Quick book prompt -->
+        <div style="margin-top:20px; background:var(--navy-card); border:1px solid var(--glass-border); border-radius:var(--radius-lg); padding:28px 28px;">
+          <h4 style="font-family:var(--font-display); font-size:1.3rem; margin-bottom:8px;">Book Instantly</h4>
+          <p style="color:var(--silver); font-size:0.875rem; margin-bottom:20px; line-height:1.7;">No forms. No wait. Just call or message us and your car is confirmed in minutes.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a href="tel:+917066536551" class="btn-primary-gold" style="flex:1; justify-content:center; min-width:130px;">
+              <i class="bi bi-telephone-fill"></i> Call Now
+            </a>
+            <a href="https://wa.link/tnddzh" target="_blank" class="btn-outline-gold" style="flex:1; justify-content:center; min-width:130px; color:#25D366; border-color:rgba(37,211,102,0.4);">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER BOTTOM ===== -->
+<div class="footer-bottom">
+  <p>© 2025 <span>Samarth Car Rentals</span>. All rights reserved. | Founded by Mr. Hrishikesh Deore &amp; Mr. Pranav Maheshwari | Mahalunge, Pune</p>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+$(function() {
+
+  /* --- PRELOADER --- */
+  setTimeout(function() {
+    $('#preloader').addClass('hide');
+    setTimeout(function() { $('#preloader').remove(); }, 700);
+  }, 1900);
+
+  /* --- NAVBAR SCROLL --- */
+  $(window).on('scroll', function() {
+    if ($(this).scrollTop() > 60) {
+      $('#mainNav').addClass('scrolled');
+    } else {
+      $('#mainNav').removeClass('scrolled');
+    }
+  });
+
+  /* --- MOBILE NAV TOGGLE --- */
+  $('#navToggler').on('click', function() {
+    var $nav = $('#mobileNav');
+    var $icon = $('#navIcon');
+    if ($nav.is(':visible')) {
+      $nav.slideUp(300);
+      $icon.removeClass('bi-x').addClass('bi-list');
+    } else {
+      $nav.slideDown(300);
+      $icon.removeClass('bi-list').addClass('bi-x');
+    }
+  });
+
+  /* --- CLOSE MOBILE NAV ON LINK CLICK --- */
+  $('#mobileNav a').on('click', function() {
+    $('#mobileNav').slideUp(300);
+    $('#navIcon').removeClass('bi-x').addClass('bi-list');
+  });
+
+  /* --- FLEET FILTER --- */
+  $('.fleet-tab-btn').on('click', function() {
+    var filter = $(this).data('filter');
+    $('.fleet-tab-btn').removeClass('active');
+    $(this).addClass('active');
+
+    $('.car-grid-item').each(function() {
+      var cat = $(this).data('category');
+      if (filter === 'all' || cat === filter) {
+        $(this).addClass('active').hide().fadeIn(350);
+      } else {
+        $(this).removeClass('active').hide();
+      }
+    });
+  });
+
+  /* --- SCROLL REVEAL --- */
+  function revealOnScroll() {
+    var scrollTop = $(window).scrollTop() + $(window).height() - 80;
+    $('.reveal').each(function() {
+      if ($(this).offset().top < scrollTop) {
+        $(this).addClass('visible');
+      }
+    });
+  }
+  $(window).on('scroll', revealOnScroll);
+  revealOnScroll();
+
+  /* --- SMOOTH SCROLL FOR ALL # LINKS --- */
+  $('a[href^="#"]').on('click', function(e) {
+    var target = $(this.getAttribute('href'));
+    if (target.length) {
+      e.preventDefault();
+      $('html, body').animate({ scrollTop: target.offset().top - 80 }, 700, 'swing');
+    }
+  });
+
+});
+
+/* --- FAQ ACCORDION --- */
+function toggleAcc(btn) {
+  var content = btn.nextElementSibling;
+  var isOpen = btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-button-custom').forEach(function(b) {
+    b.classList.remove('open');
+    b.nextElementSibling.classList.remove('show');
+  });
+  // Open clicked if was closed
+  if (!isOpen) {
+    btn.classList.add('open');
+    content.classList.add('show');
+  }
+}
+</script>
+</body>
+</html>
